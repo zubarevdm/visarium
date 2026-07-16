@@ -1,0 +1,48 @@
+[project]
+name = "vizariy-bot"
+version = "0.1.0"
+description = "«Визарий» — Telegram-сервис помощи мигрантам в РФ: этап, роадмапа, напоминания о сроках"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "aiogram>=3.13",
+    "langgraph>=0.2.60",
+    "anthropic>=0.40",
+    "openai>=1.40",
+    "sqlalchemy[asyncio]>=2.0.30",
+    "asyncpg>=0.29",
+    "alembic>=1.13",
+    "pgvector>=0.3",
+    "redis>=5.0",
+    "apscheduler>=3.10,<4",
+    "pydantic>=2.8",
+    "pydantic-settings>=2.4",
+    "structlog>=24.1",
+    "sentry-sdk>=2.0",
+    "python-frontmatter>=1.1",
+]
+
+[project.optional-dependencies]
+# Локальные эмбеддинги (multilingual-e5). Без этой группы используйте EMBEDDING_BACKEND=fake (только dev).
+embeddings-local = ["sentence-transformers>=3.0"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.uv]
+python-preference = "managed"
